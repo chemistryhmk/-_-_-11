@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тест "Хімічні реакції для НМТ"</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #0f172a 100%);
+            min-height: 100vh;
+            color: #f8fafc;
+        }
+        .glass-card {
+            background: rgba(30, 41, 59, 0.75);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .option-btn {
+            transition: all 0.2s ease-in-out;
+        }
+        .option-btn:hover:not(:disabled) {
+            transform: translateY(-2px);
+            border-color: #818cf8;
+            background-color: rgba(99, 102, 241, 0.15);
+        }
+    </style>
+</head>
+<body class="flex flex-col min-h-screen justify-between p-4 sm:p-6 md:p-8">
+
+    <header class="max-w-4xl w-full mx-auto mb-6 flex justify-between items-center glass-card p-4 rounded-2xl shadow-xl">
+        <div class="flex items-center space-x-3">
+            <div class="p-2.5 bg-indigo-600/30 rounded-xl border border-indigo-400/30 text-indigo-400">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path>
+                </svg>
+            </div>
+            <div>
+                <h1 class="text-xl font-bold text-white tracking-wide">Хімічні реакції: НМТ-Тренер</h1>
+                <p class="text-xs text-indigo-300">Підсумковий інтерактивний тест для 11 класу</p>
+            </div>
+        </div>
+        <div id="quiz-badge" class="px-3 py-1 bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 rounded-full text-xs font-semibold">
+            20 Запитань
+        </div>
+    </header>
+
+    <main class="max-w-4xl w-full mx-auto flex-1 flex flex-col justify-center">
+
+        <!-- Welcome Screen -->
+        <div id="start-screen" class="glass-card rounded-3xl p-6 md:p-10 text-center shadow-2xl space-y-6">
+            <div class="inline-block p-4 bg-indigo-500/10 rounded-full border border-indigo-500/20 mb-2">
+                <svg class="w-12 h-12 text-indigo-400 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
+                </svg>
+            </div>
+            <h2 class="text-2xl sm:text-3xl font-bold text-white">Перевірка готовності з теми «Хімічні реакції»</h2>
+            <p class="text-slate-300 max-w-2xl mx-auto leading-relaxed text-sm sm:text-base">
+                Тест розроблений для поглибленої підготовки до НМТ. Охоплює 4 ключові класи: <br/>
+                <span class="text-indigo-400 font-semibold">1) Класифікація & ОВР</span> | 
+                <span class="text-indigo-400 font-semibold">2) Термохімія</span> | 
+                <span class="text-indigo-400 font-semibold">3) Кінетика</span> | 
+                <span class="text-indigo-400 font-semibold">4) Хімічна рівновага</span>.
+            </p>
+            <div class="pt-4 flex flex-col sm:flex-row justify-center gap-4">
+                <button onclick="startQuiz('practice')" class="px-8 py-3.5 bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 text-white font-semibold rounded-xl shadow-lg transition transform hover:-translate-y-0.5">
+                    Режим Тренування (з поясненнями)
+                </button>
+                <button onclick="startQuiz('exam')" class="px-8 py-3.5 bg-slate-800 hover:bg-slate-700 border border-slate-600 text-white font-semibold rounded-xl transition">
+                    Режим Іспиту (результат у кінці)
+                </button>
+            </div>
+        </div>
+
+        <!-- Question Screen -->
+        <div id="quiz-screen" class="hidden glass-card rounded-3xl p-6 sm:p-8 shadow-2xl space-y-6">
+            <!-- Progress & Meta -->
+            <div class="space-y-2">
+                <div class="flex justify-between items-center text-xs sm:text-sm font-medium text-slate-400">
+                    <span id="question-category" class="px-2.5 py-1 bg-indigo-950/80 text-indigo-300 border border-indigo-800 rounded-md">Категорія</span>
+                    <span id="question-counter" class="text-indigo-400">Питання 1 / 20</span>
+                </div>
+                <div class="w-full bg-slate-800 h-2 rounded-full overflow-hidden">
+                    <div id="progress-bar" class="bg-gradient-to-r from-indigo-500 to-purple-500 h-full w-0 transition-all duration-300"></div>
+                </div>
+            </div>
+
+            <!-- Question Text -->
+            <div id="question-text" class="text-lg sm:text-xl font-medium text-white leading-relaxed pt-2">
+                <!-- Question will be inserted here -->
+            </div>
+
+            <!-- Options Container -->
+            <div id="options-container" class="grid grid-cols-1 gap-3 pt-2">
+                <!-- Options will be inserted here -->
+            </div>
+
+            <!-- Explanation Box (Practice Mode) -->
+            <div id="explanation-box" class="hidden p-4 rounded-xl bg-slate-900/90 border border-indigo-500/30 text-slate-200 text-sm space-y-2 animate-fade-in">
+                <div class="flex items-center space-x-2 text-indigo-400 font-semibold">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                    <span>Пояснення та Раціонал:</span>
+                </div>
+                <div id="explanation-text" class="leading-relaxed"></div>
+            </div>
+
+            <!-- Controls -->
+            <div class="flex justify-between items-center pt-4 border-t border-slate-700/50">
+                <button id="prev-btn" onclick="prevQuestion()" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg text-sm font-medium transition disabled:opacity-40 disabled:cursor-not-allowed">
+                    ← Назад
+                </button>
+                <button id="next-btn" onclick="nextQuestion()" class="px-6 py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-lg text-sm font-semibold transition shadow-md">
+                    Далі →
+                </button>
+            </div>
+        </div>
+
+        <!-- Result Screen -->
+        <div id="result-screen" class="hidden glass-card rounded-3xl p-6 sm:p-10 shadow-2xl text-center space-y-6">
+            <div class="inline-block p-4 bg-indigo-500/10 rounded-full border border-indigo-500/20">
+                <svg class="w-16 h-16 text-indigo-400 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+            </div>
+            <div>
+                <h2 class="text-3xl font-bold text-white mb-1">Тестування завершено!</h2>
+                <p class="text-slate-400 text-sm">Ось ваші підсумкові результати з теми «Хімічні реакції»</p>
+            </div>
+
+            <!-- Score Circle -->
+            <div class="flex justify-center items-center my-4">
+                <div class="relative w-36 h-36 flex items-center justify-center rounded-full bg-slate-900 border-4 border-indigo-500/50 shadow-inner">
+                    <div class="text-center">
+                        <span id="final-score" class="text-4xl font-extrabold text-white">0</span>
+                        <span class="text-xl text-slate-400">/20</span>
+                        <div id="final-percentage" class="text-xs font-semibold text-indigo-400">0%</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Category Breakdown -->
+            <div id="category-breakdown" class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-left text-sm">
+                <!-- Will be filled dynamically -->
+            </div>
+
+            <div class="pt-4 flex flex-col sm:flex-row justify-center gap-4">
+                <button onclick="restartQuiz()" class="px-6 py-3 bg-indigo-600 hover:bg-indigo-500 text-white font-semibold rounded-xl transition shadow-lg">
+                    Пройти знову
+                </button>
+                <button onclick="exportJSON()" class="px-6 py-3 bg-slate-800 hover:bg-slate-700 border border-slate-600 text-white font-semibold rounded-xl transition">
+                    Завантажити результати (JSON)
+                </button>
+            </div>
+        </div>
+
+    </main>
+
+    <footer class="max-w-4xl w-full mx-auto mt-6 text-center text-xs text-slate-500">
+        НМТ Хімія • Узагальнюючий інтерактивний модуль
+    </footer>
+
+    <script>
+        const questionsData = [
+            // --- ТЕМА 1: Класифікація та типи хімічних реакцій ---
+            {
+                category: "Класифікація & ОВР",
+                question: "Укажіть реакцію, яка належить до типів реакцій сполучення та водночас є окисно-відновниою (ОВР):",
+                options: [
+                    "$CaO + SO_3 \\rightarrow CaSO_4$",
+                    "$2\\text{Mg} + \\text{O}_2 \\rightarrow 2\\text{MgO}$",
+                    "$\\text{NH}_3 + \\text{HCl} \\rightarrow \\text{NH}_4\\text{Cl}$",
+                    "$\\text{K}_2\\text{O} + \\text{H}_2\\text{O} \\rightarrow 2\\text{KOH}$"
+                ],
+                correct: 1,
+                explanation: "Реакції сполучення за участю простих речовин (як $Mg$ та $O_2$) ЗАВЖДИ є окисно-відновними, оскільки ступені окиснення елементів змінюються від $0$ у простих речовинах до $\\text{Mg}^{+2}$ та $\\text{O}^{-2}$ у магній оксиді. Інші наведені реакції перебігають без зміни ступенів окиснення."
+            },
+            {
+                category: "Класифікація & ОВР",
+                question: "Унаслідок термічного розкладу якої солі утворюються метал, нітроген(IV) оксид та кисень?",
+                options: [
+                    "$\\text{NaNO}_3$",
+                    "$\\text{Cu(NO}_3)_2$",
+                    "$\\text{AgNO}_3$",
+                    "$\\text{NH}_4\\text{NO}_3$"
+                ],
+                correct: 2,
+                explanation: "За «нітратною пасткою» НМТ: розклад нітратів металів, розташованих у ряду активності правіше за $\\text{Cu}$ (включно з $\\text{Ag}$), дає чистий метал: $2\\text{AgNO}_3 \\overset{t}{\\rightarrow} 2\\text{Ag} + 2\\text{NO}_2\\uparrow + \\text{O}_2\\uparrow$. Нітрат натрію дає нітрит і кисень, купрум нітрат — оксид металу, $\\text{NO}_2$ і кисень."
+            },
+            {
+                category: "Класифікація & ОВР",
+                question: "До водного розчину купрум(II) сульфату додали шматочок натрію. Яка речовина випаде в осад у результаті проведеного досліду?",
+                options: [
+                    "$\\text{Cu}$",
+                    "$\\text{Cu(OH)}_2$",
+                    "$\\text{Na}_2\\text{SO}_4$",
+                    "$\\text{CuO}$"
+                ],
+                correct: 1,
+                explanation: "Лужні метали (Na, K) у водних розчинах солей НЕ витісняють менш активні метали безпосередньо! Спочатку натрій реагує з водою: $2\\text{Na} + 2\\text{H}_2\\text{O} \\rightarrow 2\\text{NaOH} + \\text{H}_2\\uparrow$. Потім утворений луг реагує із сіллю з утворенням блакитного осаду купрум(II) гідроксиду: $\\text{CuSO}_4 + 2\\text{NaOH} \\rightarrow \\text{Cu(OH)}_2\\downarrow + \\text{Na}_2\\text{SO}_4$."
+            },
+            {
+                category: "Класифікація & ОВР",
+                question: "Між якими речовинами в індивідуальних водних розчинах реакція обміну НЕ відбувається до кінця?",
+                options: [
+                    "$\\text{BaCl}_2 \\text{ та } \\text{H}_2\\text{SO}_4$",
+                    "$\\text{Na}_2\\text{CO}_3 \\text{ та } \\text{HCl}$",
+                    "$\\text{KNO}_3 \\text{ та } \\text{NaCl}$",
+                    "$\\text{KOH} \\text{ та } \\text{HNO}_3$"
+                ],
+                correct: 2,
+                explanation: "За правилом Бертолле реакції іонного обміну йдуть до кінця лише у разі утворення осаду ($\\text{BaSO}_4$), газу ($\\text{CO}_2$) або слабкого електроліту (води $\\text{H}_2\\text{O}$). У системі $\\text{KNO}_3 + \\text{NaCl}$ всі іони залишаються у розчині, тому реакція є оборотною і не доходить до кінця."
+            },
+            {
+                category: "Класифікація & ОВР",
+                question: "За звичайних умов ($t = 20^\circ\\text{C}$) концентрована сульфатна кислота НЕ реагує з:",
+                options: [
+                    "$\\text{Zn}$",
+                    "$\\text{Fe}$",
+                    "$\\text{Cu}$",
+                    "$\\text{Mg}$"
+                ],
+                correct: 1,
+                explanation: "Концентровані $\\text{H}_2\\text{SO}_4$ та $\\text{HNO}_3$ за звичайних умов спричиняють пасивацію металів заліза (Fe), алюмінію (Al) та хрому (Cr) — на їхній поверхні утворюється захисна оксидна плівка. Реакція блокується і можлива лише за нагрівання."
+            },
+
+            // --- ТЕМА 2: Енергетика хімічних реакцій (Термохімія) ---
+            {
+                category: "Термохімія",
+                question: "Укажіть процес, який належить до ендотермічних реакцій (поглинає теплоту, $\\Delta H > 0$):",
+                options: [
+                    "$\\text{C} + \\text{O}_2 \\rightarrow \\text{CO}_2$",
+                    "$\\text{CaO} + \\text{H}_2\\text{O} \\rightarrow \\text{Ca(OH)}_2$",
+                    "$\\text{N}_2 + \\text{O}_2 \\rightleftharpoons 2\\text{NO}$",
+                    "$\\text{HCl} + \\text{NaOH} \\rightarrow \\text{NaCl} + \\text{H}_2\\text{O}$"
+                ],
+                correct: 2,
+                explanation: "Утворення азот(II) оксиду з простих речовин $\\text{N}_2 + \\text{O}_2 \\rightleftharpoons 2\\text{NO} - Q$ ($\\Delta H > 0$) є класичною аномалією НМТ! Це реакція сполучення, але вона потребує дуже високої температури (електричний розряд) і є ендотермічною. Більшість інших реакцій горіння, нейтралізації та гідратації — екзотермічні."
+            },
+            {
+                category: "Термохімія",
+                question: "Стандартна ентальпія утворення ($\\Delta H^\\circ_f$) для якої з наведених речовин за визначенням дорівнює $0\\text{ кДж/моль}$?",
+                options: [
+                    "$\\text{H}_2\\text{O}_{(\\text{р})}$",
+                    "$\\text{CO}_{2(\\text{г})}$",
+                    "$\\text{O}_{2(\\text{г})}$",
+                    "$\\text{NH}_{3(\\text{г})}$"
+                ],
+                correct: 2,
+                explanation: "За термохімічною угодою стандартна ентальпія утворення ($\\Delta H^\\circ_f$) будь-якої простої речовини, що перебуває у своєму найстійкішому агрегатному стані за н.у. (як кисень $\\text{O}_{2(\\text{г})}$ або графіт $C$), за визначенням дорівнює $0\\text{ кДж/моль}$."
+            },
+            {
+                category: "Термохімія",
+                question: "Якщо термохімічне рівняння розкладу вапняку має вигляд: $\\text{CaCO}_{3(\\text{т})} \\rightarrow \\text{CaO}_{(\\text{т})} + \\text{CO}_{2(\\text{г})}, \\; \\Delta H = +178\\text{ кДж}$, то ентальпія зворотної реакції дорівнює:",
+                options: [
+                    "$+178\\text{ кДж}$",
+                    "$-178\\text{ кДж}$",
+                    "$+89\\text{ кДж}$",
+                    "$0\\text{ кДж}$"
+                ],
+                correct: 1,
+                explanation: "Згідно з першим наслідком із закону Гесса (закон Лавуазьє-Лапласа), тепловий ефект прямої та зворотної реакції однаковий за величиною, але протилежний за знаком: $\\Delta H_{\\text{зворотна}} = -\\Delta H_{\\text{пряма}} = -178\\text{ кДж}$."
+            },
+            {
+                category: "Термохімія",
+                question: "Термохімічне рівняння згорання метану: $\\text{CH}_{4(\\text{г})} + 2\\text{O}_{2(\\text{г})} \\rightarrow \\text{CO}_{2(\\text{г})} + 2\\text{H}_2\\text{O}_{(\\text{г})} + 890\\text{ кДж}$. Обчисліть кількість теплоти, яка виділиться під час спалювання $5{,}6\\text{ л}$ (н.у.) метану.",
+                options: [
+                    "$890\\text{ кДж}$",
+                    "$445\\text{ кДж}$",
+                    "$222{,}5\\text{ кДж}$",
+                    "$111{,}25\\text{ кДж}$"
+                ],
+                correct: 2,
+                explanation: "Кількість речовини метану: $n(\\text{CH}_4) = 5{,}6 / 22{,}4 = 0{,}25\\text{ моль}$. Оскільки при спалюванні $1\\text{ моль}$ виділяється $890\\text{ кДж}$, то для $0{,}25\\text{ моль}$ теплота становить: $Q = 0{,}25 \\cdot 890 = 222{,}5\\text{ кДж}$."
+            },
+            {
+                category: "Термохімія",
+                question: "У якому випадку хімічна реакція перебігає з виділенням теплоти в навколишнє середовище (екзотермічна)?",
+                options: [
+                    "Енергія розриву старих зв'язків більша за енергію утворення нових",
+                    "Енергія утворення нових зв'язків більша за енергію розриву старих",
+                    "Ентальпія продуктів більша за ентальпію реагентів ($\\Delta H > 0$)",
+                    "Запас внутрішньої енергії системи зростає"
+                ],
+                correct: 1,
+                explanation: "Утворення нових хімічних зв'язків ЗАВЖДИ виділяє енергію, а розрив старих — потребує енергії. Якщо енергія утворення нових зв'язків більша за енергію розриву старих, надлишок виділяється у середовище у вигляді тепла ($+Q, \\Delta H < 0$, екзотермічна реакція)."
+            },
+
+            // --- ТЕМА 3: Швидкість хімічних реакцій (Кінетика) ---
+            {
+                category: "Кінетика",
+                question: "При підвищенні температури від $20^\circ\\text{C}$ до $50^\circ\\text{C}$ швидкість хімічної реакції зросла у $27$ разів. Чому дорівнює температурний коефіцієнт цієї реакції ($\\gamma$)?",
+                options: [
+                    "$2$",
+                    "$3$",
+                    "$4$",
+                    "$1{,}5$"
+                ],
+                correct: 1,
+                explanation: "За правилом Вант-Гоффа: $v_2 / v_1 = \\gamma^{\\Delta T / 10}$. Тут $\\Delta T = 50 - 20 = 30^\circ\\text{C}$. Отже, $\\Delta T / 10 = 3$. Маємо рівняння: $\\gamma^3 = 27 \\Rightarrow \\gamma = 3$."
+            },
+            {
+                category: "Кінетика",
+                question: "При підвищенні температури від $20\,^\circ\text{C}$ до $50\,^\circ\text{C}$ швидкість хімічної реакції зросла у $27$ разів. Чому дорівнює температурний коефіцієнт цієї реакції ($\\gamma$)?",
+                options: [
+                    "$2$",
+                    "$3$",
+                    "$4$",
+                    "$1{,}5$"
+                ],
+                correct: 1,
+                explanation: "За правилом Вант-Гоффа: $v_2 / v_1 = \\gamma^{\\Delta T / 10}$. Тут $\\Delta T = 50 - 20 = 30\,^\circ\\text{C}$. Отже, $\\Delta T / 10 = 3$. Маємо рівняння: $\\gamma^3 = 27 \\Rightarrow \\gamma = 3$."
+            },
+            {
+                category: "Кінетика",
+                question: "Яка саме роль належить каталізатору під час прискорення хімічного процесу?",
+                options: [
+                    "Збільшує тепловий ефект реакції ($\\Delta H$)",
+                    "Знижує енергію активації реакції",
+                    "Збільшує кінетичну енергію всіх реагуючих молекул",
+                    "Зміщує хімічну рівновагу в бік утворення продуктів"
+                ],
+                correct: 1,
+                explanation: "Каталізатор спрямовує хімічну реакцію новим альтернативним шляхом, що характеризується нижчою енергією активації ($E_a$). Він НЕ змінює тепловий ефект ($\\Delta H$) та НЕ зміщує стан рівноваги."
+            },
+            {
+                category: "Кінетика",
+                question: "Для якої з наведених хімічних систем подрібнення вихідної речовини спричинить зростання швидкості реакції?",
+                options: [
+                    "$2\\text{NO}_{(\\text{г})} + \\text{O}_{2(\\text{г})}$",
+                    "$\\text{HCl}_{(\\text{р-н})} + \\text{NaOH}_{(\\text{р-н})}$",
+                    "$\\text{Zn}_{(\\text{т})} + 2\\text{HCl}_{(\\text{р-н})}$",
+                    "$\\text{H}_{2(\\text{г})} + \\text{Cl}_{2(\\text{г})}$"
+                ],
+                correct: 2,
+                explanation: "Фактор «площа поверхні зіткнення» та подрібнення працює ТІЛЬКИ для гетерогенних систем, де є межа поділу фаз (наприклад, тверда речовина + розчин: $\\text{Zn}_{(\\text{т})} + \\text{HCl}_{(\\text{р-н})}$). Інші наведені системи є гомогенними (газовими або рідкими розчинами)."
+            },
+            {
+                category: "Кінетика",
+                question: "Яка одиниця вимірювання використовується для характеристики швидкості гомогенної хімічної реакції?",
+                options: [
+                    "$\\text{моль}/\\text{с}$",
+                    "$\\text{моль}/(\\text{л} \\cdot \\text{с})$",
+                    "$\\text{г}/(\\text{м}^2 \\cdot \\text{с})$",
+                    "$\\text{л}/\\text{хв}$"
+                ],
+                correct: 1,
+                explanation: "Швидкість гомогенної реакції визначається як зміна молярної концентрації речовини за одиницю часу: $v = \\Delta C / \\Delta t$. Концентрація вимірюється у $\\text{моль}/\\text{л}$, час — у секундах, тому одиниця вимірювання становить $\\text{моль}/(\\text{л} \\cdot \\text{с})$."
+            },
+
+            // --- ТЕМА 4: Хімічна рівновага ---
+            {
+                category: "Хімічна рівновага",
+                question: "Збільшення тиску в системі спричинить зсув хімічної рівноваги ВПРАВО у випадку реакції:",
+                options: [
+                    "$\\text{N}_{2(\\text{г})} + \\text{O}_{2(\\text{г})} \\rightleftharpoons 2\\text{NO}_{(\\text{г})}$",
+                    "$2\\text{SO}_{2(\\text{г})} + \\text{O}_{2(\\text{г})} \\rightleftharpoons 2\\text{SO}_{3(\\text{г})}$",
+                    "$\\text{CaCO}_{3(\\text{т})} \\rightleftharpoons \\text{CaO}_{(\\text{т})} + \\text{CO}_{2(\\text{г})}$",
+                    "$2\\text{NH}_{3(\\text{г})} \\rightleftharpoons \\text{N}_{2(\\text{г})} + 3\\text{H}_{2(\\text{г})}$"
+                ],
+                correct: 1,
+                explanation: "За принципом Ле Шательє підвищення тиску зміщує рівновагу в бік меншого об'єму (меншої кількості моль газів). У реакції $2\\text{SO}_2 + \\text{O}_2 \\rightleftharpoons 2\\text{SO}_3$ зліва $3\\text{ моль}$ газів, а справа $2\\text{ моль}$ газів. Збільшення тиску змістить рівновагу вправо (вбік продуктів)."
+            },
+            {
+                category: "Хімічна рівновага",
+                question: "Процес синтезу амоніаку описується оборотним рівнянням: $\\text{N}_{2(\\text{г})} + 3\\text{H}_{2(\\text{г})} \\rightleftharpoons 2\\text{NH}_{3(\\text{г})}, \\; \\Delta H < 0$. Який режим умов сприятиме максимальному виходу амоніаку?",
+                options: [
+                    "Підвищення температури та зниження тиску",
+                    "Зниження температури та збільшення тиску",
+                    "Додавання каталізатора та зменшення тиску",
+                    "Зниження температури та зниження тиску"
+                ],
+                correct: 1,
+                explanation: "Пряма реакція є екзотермічною ($\\Delta H < 0$) та супроводжується зменшенням об'єму газів ($4\\text{ моль} \\rightarrow 2\\text{ моль}$). Щоб змістити рівновагу вправо (вбік виходу $\\text{NH}_3$), за принципом Ле Шательє необхідно знижувати температуру та збільшувати тиск."
+            },
+            {
+                category: "Хімічна рівновага",
+                question: "Введення каталізатора в оборотну систему $\\text{2SO}_{2(\\text{г})} + \\text{O}_{2(\\text{г})} \\rightleftharpoons \\text{2SO}_{3(\\text{г})}$ призведе до:",
+                options: [
+                    "Зсуву рівноваги вбік утворення $\\text{SO}_3$",
+                    "Збільшення константи рівноваги $K_c$",
+                    "Прискорення досягнення стану рівноваги без зміни співвідношення речовин",
+                    "Зсуву рівноваги вбік вихідних речовин"
+                ],
+                correct: 2,
+                explanation: "ГОЛОВНИЙ МІФ НМТ: Каталізатор НІКОЛИ не зміщує хімічну рівновагу! Він однаково прискорює як пряму, так і зворотну реакції, лише скорочуючи час досягнення стану рівноваги."
+            },
+            {
+                category: "Хімічна рівновага",
+                question: "Зменшення концентрації вуглекислого газу в оборотній системі $\\text{CO}_{2(\\text{г})} + \\text{C}_{(\\text{т})} \\rightleftharpoons 2\\text{CO}_{(\\text{г})}$ призведе до:",
+                options: [
+                    "Зсуву рівноваги вліво",
+                    "Зсуву рівноваги вправо",
+                    "Збільшення швидкості прямої реакції",
+                    "Відсутності змін у системі"
+                ],
+                correct: 0,
+                explanation: "Якщо зменшити концентрацію реагенту ($\\text{CO}_2$), система намагатиметься компенсувати цю втрату за принципом «впертості» Ле Шательє. Рівновага зміститься вліво (вбік зворотної реакції), щоб відновити вихідний $\\text{CO}_2$."
+            },
+            {
+                category: "Хімічна рівновага",
+                question: "Укажіть математичний вираз для константи рівноваги ($K_c$) гетерогенної реакції $\\text{Fe}_2\\text{O}_{3(\\text{т})} + 3\\text{CO}_{(\\text{г})} \\rightleftharpoons 2\\text{Fe}_{(\\text{т})} + 3\\text{CO}_{2(\\text{г})}$:",
+                options: [
+                    "$K_c = \\frac{[\\text{Fe}]^2 \\cdot [\\text{CO}_2]^3}{[\\text{Fe}_2\\text{O}_3] \\cdot [\\text{CO}]^3}$",
+                    "$K_c = \\frac{[\\text{CO}_2]^3}{[\\text{CO}]^3}$",
+                    "$K_c = \\frac{[\\text{CO}_2]}{[\\text{CO}]}$",
+                    "$K_c = \\frac{[\\text{CO}]^3}{[\\text{CO}_2]^3}$"
+                ],
+                correct: 1,
+                explanation: "У вираз константи рівноваги гетерогенної реакції НЕ входять концентрації твердих фаз ($\\text{Fe}_2\\text{O}_3$ та $\\text{Fe}$), бо їхні активності сталі. $K_c$ дорівнює відношенню добутку рівноважних концентрацій газоподібних продуктів до реагентів у ступенях їхніх коефіцієнтів: $K_c = \\frac{[\\text{CO}_2]^3}{[\\text{CO}]^3}$."
+            }
+        ];
+
+        let currentQuestionIndex = 0;
+        let userAnswers = new Array(questionsData.length).fill(null);
+        let quizMode = 'practice'; // 'practice' or 'exam'
+
+        function startQuiz(mode) {
+            quizMode = mode;
+            document.getElementById('start-screen').classList.add('hidden');
+            document.getElementById('quiz-screen').classList.remove('hidden');
+            document.getElementById('quiz-badge').innerText = mode === 'practice' ? 'Режим: Тренування' : 'Режим: Іспит';
+            
+            showQuestion(0);
+        }
+
+        function showQuestion(index) {
+            currentQuestionIndex = index;
+            const q = questionsData[index];
+
+            // Render Meta
+            document.getElementById('question-category').innerText = q.category;
+            document.getElementById('question-counter').innerText = `Питання ${index + 1} / ${questionsData.length}`;
+            document.getElementById('progress-bar').style.width = `${((index + 1) / questionsData.length) * 100}%`;
+
+            // Question Text
+            document.getElementById('question-text').innerHTML = q.question;
+
+            // Options
+            const container = document.getElementById('options-container');
+            container.innerHTML = '';
+
+            const selectedAnswer = userAnswers[index];
+            const isAnswered = selectedAnswer !== null;
+
+            q.options.forEach((opt, optIdx) => {
+                const btn = document.createElement('button');
+                btn.className = `option-btn w-full text-left p-4 rounded-xl border border-slate-700 bg-slate-800/80 text-slate-200 text-sm sm:text-base flex items-start space-x-3`;
+                
+                if (isAnswered) {
+                    btn.disabled = true;
+                    if (optIdx === q.correct) {
+                        btn.classList.add('bg-emerald-950/80', 'border-emerald-500', 'text-emerald-200');
+                    } else if (optIdx === selectedAnswer && selectedAnswer !== q.correct) {
+                        btn.classList.add('bg-rose-950/80', 'border-rose-500', 'text-rose-200');
+                    }
+                }
+
+                btn.onclick = () => selectOption(optIdx);
+                btn.innerHTML = `
+                    <span class="font-bold text-indigo-400 min-w-[24px]">${String.fromCharCode(65 + optIdx)})</span>
+                    <span class="flex-1">${opt}</span>
+                `;
+                container.appendChild(btn);
+            });
+
+            // Navigation Buttons
+            document.getElementById('prev-btn').disabled = index === 0;
+            const nextBtn = document.getElementById('next-btn');
+            if (index === questionsData.length - 1) {
+                nextBtn.innerText = 'Завершити тест';
+                nextBtn.className = 'px-6 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg text-sm font-semibold transition shadow-md';
+            } else {
+                nextBtn.innerText = 'Далі →';
+                nextBtn.className = 'px-6 py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-lg text-sm font-semibold transition shadow-md';
+            }
+
+            // Explanation box handling
+            const explanationBox = document.getElementById('explanation-box');
+            if (quizMode === 'practice' && isAnswered) {
+                explanationBox.classList.remove('hidden');
+                document.getElementById('explanation-text').innerHTML = q.explanation;
+            } else {
+                explanationBox.classList.add('hidden');
+            }
+
+            // Re-render KaTeX math formulas
+            if (window.renderMathInElement) {
+                try {
+                    renderMathInElement(document.getElementById('quiz-screen'), {
+                        delimiters: [
+                            {left: '$$', right: '$$', display: true},
+                            {left: '$', right: '$', display: false}
+                        ],
+                        throwOnError: false
+                    });
+                } catch (e) {
+                    console.warn("KaTeX render notice:", e);
+                }
+            }
+        }
+
+        function selectOption(optionIndex) {
+            if (userAnswers[currentQuestionIndex] !== null) return; // already answered
+            userAnswers[currentQuestionIndex] = optionIndex;
+            showQuestion(currentQuestionIndex);
+        }
+
+        function nextQuestion() {
+            if (currentQuestionIndex < questionsData.length - 1) {
+                showQuestion(currentQuestionIndex + 1);
+            } else {
+                finishQuiz();
+            }
+        }
+
+        function prevQuestion() {
+            if (currentQuestionIndex > 0) {
+                showQuestion(currentQuestionIndex - 1);
+            }
+        }
+
+        function finishQuiz() {
+            document.getElementById('quiz-screen').classList.add('hidden');
+            document.getElementById('result-screen').classList.remove('hidden');
+
+            let score = 0;
+            const categoryStats = {};
+
+            questionsData.forEach((q, idx) => {
+                if (!categoryStats[q.category]) {
+                    categoryStats[q.category] = { correct: 0, total: 0 };
+                }
+                categoryStats[q.category].total++;
+
+                if (userAnswers[idx] === q.correct) {
+                    score++;
+                    categoryStats[q.category].correct++;
+                }
+            });
+
+            const percentage = Math.round((score / questionsData.length) * 100);
+            document.getElementById('final-score').innerText = score;
+            document.getElementById('final-percentage').innerText = `${percentage}% успішності`;
+
+            // Render breakdown
+            const breakdownContainer = document.getElementById('category-breakdown');
+            breakdownContainer.innerHTML = '';
+
+            Object.keys(categoryStats).forEach(cat => {
+                const stat = categoryStats[cat];
+                const catPercent = Math.round((stat.correct / stat.total) * 100);
+                const div = document.createElement('div');
+                div.className = 'p-3 rounded-xl bg-slate-900/80 border border-slate-700/60 flex justify-between items-center';
+                div.innerHTML = `
+                    <div>
+                        <div class="font-medium text-slate-200">${cat}</div>
+                        <div class="text-xs text-slate-400">${stat.correct} з ${stat.total} правильних</div>
+                    </div>
+                    <div class="font-bold text-indigo-400">${catPercent}%</div>
+                `;
+                breakdownContainer.appendChild(div);
+            });
+        }
+
+        function restartQuiz() {
+            userAnswers = new Array(questionsData.length).fill(null);
+            document.getElementById('result-screen').classList.add('hidden');
+            document.getElementById('start-screen').classList.remove('hidden');
+        }
+
+        function exportJSON() {
+            const report = {
+                timestamp: new Date().toISOString(),
+                score: userAnswers.reduce((acc, ans, idx) => ans === questionsData[idx].correct ? acc + 1 : acc, 0),
+                total: questionsData.length,
+                answeredQuestions: questionsData.map((q, idx) => ({
+                    question: q.question,
+                    userAnswer: userAnswers[idx] !== null ? q.options[userAnswers[idx]] : "[skipped]",
+                    correctAnswer: q.options[q.correct],
+                    userIsCorrect: userAnswers[idx] === q.correct
+                }))
+            };
+
+            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(report, null, 2));
+            const downloadAnchor = document.createElement('a');
+            downloadAnchor.setAttribute("href", dataStr);
+            downloadAnchor.setAttribute("download", "chemical_reactions_nmt_quiz.json");
+            document.body.appendChild(downloadAnchor);
+            downloadAnchor.click();
+            downloadAnchor.remove();
+        }
+
+        // Auto render math on initial load if needed
+        window.onload = function() {
+            if (window.renderMathInElement) {
+                try {
+                    renderMathInElement(document.body, {
+                        delimiters: [
+                            {left: '$$', right: '$$', display: true},
+                            {left: '$', right: '$', display: false}
+                        ],
+                        throwOnError: false
+                    });
+                } catch (e) {
+                    console.warn("KaTeX initial render notice:", e);
+                }
+            }
+        };
+    </script>
+</body>
+</html>
